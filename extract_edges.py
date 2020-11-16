@@ -114,6 +114,3 @@ def edges_extraction(im,prof,mm,precision):
 		imClosed = morph('closed',edges,ss)
 	im = imClosed.copy()
 	return edges, im
-"
-
-#Extraccíon de bordes
