@@ -115,3 +115,5 @@ def edges_extraction(im,prof,mm,precision):
 	im = imClosed.copy()
 	return edges, im
 "
+
+#Extraccíon de bordes
