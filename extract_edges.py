@@ -111,11 +111,34 @@ plot.axis("off")
 plot.title("Eroded") 
 plot.imshow(i_eroded, cmap='gray')
 
-#4. Modelo de contorno: eliminar falsos negativos
+# 5. Modelo de contorno: eliminar falsos negativos
 
 "Threshold"
 ret,thresh = cv2.threshold(i_eroded, 217, 255,0)
 contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE) 
+
+# Identificación del contorno más grande
+
+# def higest_contour (contours,cogidos):
+    
+# 	s = len(contours)  
+# 	sizes = np.zeros(s)
+# 	for i in range(s):
+# 		sizes[i] = cv2.contourArea(contours[i])
+# 	if len(sizes) == 0:
+# 		return None,None
+# 	sord = sorted(sizes)
+# 	m = sord[len(sizes)-len(cogidos)-1]
+
+# 	for i in range(len(contours)):
+# 		if sizes[i] == m:
+# 			mayor = i 
+# 			cogidos.append(i)
+# 	cnt = contours[mayor]
+# 	return cnt,cogidos
+
+
+
 i_contours = cv2.drawContours(w_tophat, contours, 5, (0, 255, 0), 1)
 
 plot.figure()
@@ -123,14 +146,10 @@ plot.subplot(1,2,1)
 plot.axis("off")
 plot.title("Contour")
 plot.imshow(i_contours)
-plot.subplot(1,2,2)
-plot.axis("off")
-plot.title("Canny")
-plot.imshow(i_edges, cmap='gray')
+# plot.subplot(1,2,2)
+# plot.axis("off")
+# plot.title("Canny")
+# plot.imshow(i_edges, cmap='gray')
 
-
-
-
-
-
+# 6. Proceso de crecimiento de la región: para agregar o eliminar progresivamente los píxeles vecinos por similitud de intensidad hasta alcanzar todo el contorno del borde vascular
 
