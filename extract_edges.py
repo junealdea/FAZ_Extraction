@@ -130,13 +130,15 @@ max_contours = int(np.max(total_contours))
 "Dibujar el contorno más grandes"
 i = 0
 for i in range (len(total_contours)):
-    if total_contours[i] == max_contours:
+    if total_contours[i] == 2:
        i_contours = cv2.drawContours(w_tophat, contours, i, (0, 255, 0), 1)
+       plot.figure()
+       plot.axis("off")
+       plot.title("Contour")
+       plot.imshow(i_contours)
  
-plot.figure()
-plot.axis("off")
-plot.title("Contour")
-plot.imshow(i_contours)
+
+
 
 # 6. Proceso de crecimiento de la región: para agregar o eliminar progresivamente los píxeles vecinos por similitud de intensidad hasta alcanzar todo el contorno del borde vascular
 
