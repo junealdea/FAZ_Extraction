@@ -117,39 +117,26 @@ plot.imshow(i_eroded, cmap='gray')
 ret,thresh = cv2.threshold(i_eroded, 217, 255,0)
 contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE) 
 
-# Identificación del contorno más grande
+"Extraer columna de size"
+i = 0
+total_contours = np.ones(len(contours))
+for i in range (len(contours)):
+    contornos = contours[i].shape
+    total_contours[i] = np.array(contornos[0])
 
-# def higest_contour (contours,cogidos):
+"Elegir el contorno más grande"
+max_contours = int(np.max(total_contours))
     
-# 	s = len(contours)  
-# 	sizes = np.zeros(s)
-# 	for i in range(s):
-# 		sizes[i] = cv2.contourArea(contours[i])
-# 	if len(sizes) == 0:
-# 		return None,None
-# 	sord = sorted(sizes)
-# 	m = sord[len(sizes)-len(cogidos)-1]
-
-# 	for i in range(len(contours)):
-# 		if sizes[i] == m:
-# 			mayor = i 
-# 			cogidos.append(i)
-# 	cnt = contours[mayor]
-# 	return cnt,cogidos
-
-
-
-i_contours = cv2.drawContours(w_tophat, contours, 5, (0, 255, 0), 1)
-
+"Dibujar el contorno más grandes"
+i = 0
+for i in range (len(total_contours)):
+    if total_contours[i] == max_contours:
+       i_contours = cv2.drawContours(w_tophat, contours, i, (0, 255, 0), 1)
+ 
 plot.figure()
-plot.subplot(1,2,1)
 plot.axis("off")
 plot.title("Contour")
 plot.imshow(i_contours)
-# plot.subplot(1,2,2)
-# plot.axis("off")
-# plot.title("Canny")
-# plot.imshow(i_edges, cmap='gray')
 
 # 6. Proceso de crecimiento de la región: para agregar o eliminar progresivamente los píxeles vecinos por similitud de intensidad hasta alcanzar todo el contorno del borde vascular
 
