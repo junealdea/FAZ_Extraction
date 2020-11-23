@@ -128,14 +128,17 @@ for i in range (len(contours)):
 max_contours = int(np.max(total_contours))
     
 "Dibujar el contorno más grandes"
-i = 0
 for i in range (len(total_contours)):
-    if total_contours[i] == 2:
-       i_contours = cv2.drawContours(w_tophat, contours, i, (0, 255, 0), 1)
+    im = whitetophat(image, elem)
+    if total_contours[i] == max_contours:
+       i_contours = cv2.drawContours(im, contours, i, (0, 255, 0), 1)
        plot.figure()
        plot.axis("off")
        plot.title("Contour")
        plot.imshow(i_contours)
+      
+       
+
  
 
 
