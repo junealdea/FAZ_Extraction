@@ -33,7 +33,7 @@ media = media(size)
 # 1. White top hat 
 # Getting the kernel to be used in Top-Hat 
 filterSize =(11,11) 
-"MORPH_RECT / MORPH_CROSS / MORPH_ELLIPSE"
+# MORPH_RECT / MORPH_CROSS / MORPH_ELLIPSE
 elem = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, filterSize) 
 
 def whitetophat(image, elem):
@@ -53,11 +53,11 @@ plot.imshow(w_tophat)
  
 # 2. Edges identification
 def canny(w_tophat, filterSize, size):
-    "Reducción de ruido mediante filtro Gaussiano"
+    # Reducción de ruido mediante filtro Gaussiano
     i_gaussian = cv2.GaussianBlur(w_tophat,filterSize,2)
-    "Normalización de la imagen"
+    # Normalización de la imagen
     i_normalized = cv2.normalize (i_gaussian,None,0,255,cv2.NORM_MINMAX)
-    "Detección de bordes"
+    # Detección de bordes
     i_edges = cv2.Canny (np.uint8(i_normalized),0, media+media*0.7*0.2)
     #edges = cv2.Canny(np.uint8(edges),t1,t2)     t2 = m+m*0.2*precision,2 ¿xq es este el máximo?
     return i_edges
@@ -112,22 +112,21 @@ plot.title("Eroded")
 plot.imshow(i_eroded, cmap='gray')
 
 # 5. Modelo de contorno: eliminar falsos negativos
-
-"Threshold"
+# Threshold
 ret,thresh = cv2.threshold(i_eroded, 217, 255,0)
 contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE) 
 
-"Extraer columna de size"
+# Extraer columna de size
 i = 0
 total_contours = np.ones(len(contours))
 for i in range (len(contours)):
     contornos = contours[i].shape
     total_contours[i] = np.array(contornos[0])
 
-"Elegir el contorno más grande"
+# Elegir el contorno más grande
 max_contours = int(np.max(total_contours))
     
-"Dibujar el contorno más grandes"
+# Dibujar el contorno más grandes
 for i in range (len(total_contours)):
     im = whitetophat(image, elem)
     if total_contours[i] == max_contours:
@@ -137,11 +136,5 @@ for i in range (len(total_contours)):
        plot.title("Contour")
        plot.imshow(i_contours)
       
-       
-
- 
-
-
-
 # 6. Proceso de crecimiento de la región: para agregar o eliminar progresivamente los píxeles vecinos por similitud de intensidad hasta alcanzar todo el contorno del borde vascular
 
