@@ -117,24 +117,23 @@ ret,thresh = cv2.threshold(i_eroded, 217, 255,0)
 contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE) 
 
 # Extraer columna de size
-i = 0
-total_contours = np.ones(len(contours))
-for i in range (len(contours)):
-    contornos = contours[i].shape
-    total_contours[i] = np.array(contornos[0])
+total_contours = np.zeros(len(contours))
+for i, countour in enumerate(contours):
+    total_contours[i] = countour.shape[0]
 
-# Elegir el contorno más grande
-max_contours = int(np.max(total_contours))
-    
-# Dibujar el contorno más grandes
-for i in range (len(total_contours)):
-    im = whitetophat(image, elem)
-    if total_contours[i] == max_contours:
-       i_contours = cv2.drawContours(im, contours, i, (0, 255, 0), 1)
-       plot.figure()
-       plot.axis("off")
-       plot.title("Contour")
-       plot.imshow(i_contours)
+# Mayor contorno
+max_contours_ind = np.argmax(total_contours)
+i_contours = cv2.drawContours(w_tophat, contours, max_contours_ind , (0, 255, 0), 1)
+plot.figure()
+plot.axis("off")
+plot.title("Contour")
+plot.imshow(i_contours)
       
 # 6. Proceso de crecimiento de la región: para agregar o eliminar progresivamente los píxeles vecinos por similitud de intensidad hasta alcanzar todo el contorno del borde vascular
+
+# Punto de partida: seedpoint (x,y) / maxdist: maximum intensity distance (defaults to 0.2)
+
+def regiongrowing (im, x, y, maxdist):
+    return 
+
 
