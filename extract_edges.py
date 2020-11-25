@@ -118,8 +118,8 @@ contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_
 
 # Extraer columna de size
 total_contours = np.zeros(len(contours))
-for i, countour in enumerate(contours):
-    total_contours[i] = countour.shape[0]
+for i, contour in enumerate(contours):
+    total_contours[i] = contour.shape[0]
 
 # Mayor contorno
 max_contours_ind = np.argmax(total_contours)
@@ -128,12 +128,57 @@ plot.figure()
 plot.axis("off")
 plot.title("Contour")
 plot.imshow(i_contours)
-      
-# 6. Proceso de crecimiento de la región: para agregar o eliminar progresivamente los píxeles vecinos por similitud de intensidad hasta alcanzar todo el contorno del borde vascular
 
-# Punto de partida: seedpoint (x,y) / maxdist: maximum intensity distance (defaults to 0.2)
+# Crecimiento regional: dada una región y un pixel (del contorno) lo expande hasta alcanzar el criterio de parada
+ 
+# Choose seed points --> mitad de la imagen que es la región dentro del cortorno
+sizei_reg = w_tophat.shape
+x = int(sizei_reg[0]/2)
+y = int(sizei_reg[0]/2)
+seedpoint = [x,y]
 
-def regiongrowing (im, x, y, maxdist):
-    return 
+# Threshold --> Si el pixel vecino cogido - seed point, es menor que el Threshold, se considera similar
+threshold = 50
+# Cogemos los pixeles vecino del seed point (ocho en total)   
+coor = [[x-1,y-1],[x-1,y],[x-1,y+1],[x,y-1],[x,y+1],[x+1,y-1],[x+1,y],[x+1,y+1]]
+
+# Sacamos los valores de cada posición (coor)
+nearpixels = np.zeros(len(coor))
+i_regiongrowing = cv2.cvtColor(i_contours,cv2.COLOR_RGB2GRAY)
+for i, position in enumerate(coor):
+    nearpixels[i] = i_regiongrowing[position[0],position[1]]
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
