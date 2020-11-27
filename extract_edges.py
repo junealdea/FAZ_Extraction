@@ -130,55 +130,69 @@ plot.title("Contour")
 plot.imshow(i_contours)
 
 # Crecimiento regional: dada una región y un pixel (del contorno) lo expande hasta alcanzar el criterio de parada
- 
-# Choose seed points --> mitad de la imagen que es la región dentro del cortorno
-sizei_reg = w_tophat.shape
-x = int(sizei_reg[0]/2)
-y = int(sizei_reg[0]/2)
-seedpoint = [x,y]
+i_regiongrowing = cv2.cvtColor(w_tophat,cv2.COLOR_RGB2GRAY)
+# plot.figure()
+# plot.title("Histograma de píxeles")
+# plot.hist(i_regiongrowing)
 
+# Choose seed points --> mitad de la imagen que es la región dentro del 
+sizei_reg = i_regiongrowing.shape
+x = int(sizei_reg[0]/2)
+y = int(sizei_reg[1]/2)
+
+i_reg = np.zeros(sizei_reg)
 # Threshold --> Si el pixel vecino cogido - seed point, es menor que el Threshold, se considera similar
 threshold = 50
-# Cogemos los pixeles vecino del seed point (ocho en total)   
-coor = [[x-1,y-1],[x-1,y],[x-1,y+1],[x,y-1],[x,y+1],[x+1,y-1],[x+1,y],[x+1,y+1]]
 
-# Sacamos los valores de cada posición (coor)
-nearpixels = np.zeros(len(coor))
-i_regiongrowing = cv2.cvtColor(i_contours,cv2.COLOR_RGB2GRAY)
-for i, position in enumerate(coor):
-    nearpixels[i] = i_regiongrowing[position[0],position[1]]
+# # Cogemos los pixeles vecino del seed point (ocho en total)   
+# coor = [[x-1,y-1],[x-1,y],[x-1,y+1],[x,y-1],[x,y+1],[x+1,y-1],[x+1,y],[x+1,y+1]]
 
+# # Sacamos los valores de cada posición (coor)
+# nearpixels = np.zeros(len(coor))
+# for i, position in enumerate(coor):
+#     nearpixels[i] = i_regiongrowing[position[0],position[1]]
+#     dif = i_regiongrowing[x,y] - nearpixels[i]
+#     if dif < threshold:
+#         i_regiongrowing[position[0],position[1]] = 0
+#     else:
+#         i_regiongrowing[position[0],position[1]] = 255
+    
+# plot.figure()
+# plot.axis("off")
+# plot.title("Region growing")
+# plot.imshow(i_regiongrowing, cmap='gray')
 
-
+# for j in range(50):
+#     i_reg[x,y] = i_regiongrowing[x,y]
+#     coor = [[x-j,y-j],[x-j,y],[x-j,y+j],[x,y-j],[x,y+j],[x+j,y-j],[x+j,y],[x+j,y+j]]
+#     nearpixels = np.zeros(len(coor))
+#     for i, position in enumerate(coor): 
+#         nearpixels[i] = i_regiongrowing[position[0],position[1]]
+#         dif = abs(i_regiongrowing[x,y] - nearpixels[i])
+#         if dif < threshold:
+#             i_reg[position[0],position[1]] = 255
+#         else:
+#             i_reg[position[0],position[1]] = 0
 
     
+# plot.figure()
+# plot.axis("off")
+# plot.title("Region growing")
+# plot.imshow(i_regiongrowing, cmap='gray')
+        
 
+# for i in range(sizei_reg[0]):
+#     for j in range(sizei_reg[1]):
+#         diferencia = abs(i_regiongrowing[i,j] -  i_regiongrowing[x,y])
+#         if diferencia < threshold:
+#             i_reg[i,j] = 1
+#         else:
+#             i_reg[i,j] = 0
 
+# plot.figure()
+# plot.axis("off")
+# plot.title("Region growing")
+# plot.imshow(i_reg)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# ret,thresh = cv2.threshold(i_reg, 0.3, 1, 0)
+# contours,hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
