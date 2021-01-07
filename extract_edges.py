@@ -10,22 +10,23 @@ import cv2
 import matplotlib.pyplot as plot
 
 # Import input image
-image = plot.imread("./images/angio3superf.tif")
-plot.subplot(1,2,1)
-plot.axis("off")
-plot.title("Input image")  
+imagetocrop = plot.imread("./data/A09_R/A09 A09 OD 2020-10-30T105858 OCTA  07_DVC PARon v6.16.7.0.png")
+# Cortamos la imagen
+image = imagetocrop[150:640, 130:600]
+plot.figure()
+plot.axis("off") 
 plot.imshow(image)
 i_gray = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
 size=i_gray.shape
                     
 #Media de los píxeles
 def media(size):
-	sume = 0
-	dim = size[0]*size[1]
-	for i in range(size[0]):
-		for j in range(size[1]):
-			sume += i_gray[i,j]
-	return sume/dim
+ 	sume = 0
+ 	dim = size[0]*size[1]
+ 	for i in range(size[0]):
+         for j in range(size[1]):
+             sume += i_gray[i,j]
+ 	return sume/dim
 
 media = media(size)
 
@@ -36,17 +37,17 @@ filterSize =(11,11)
 # MORPH_RECT / MORPH_CROSS / MORPH_ELLIPSE
 elem = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, filterSize) 
 
-def whitetophat(image, elem):
+def whitetophat(i_crop, elem):
     """The white_tophat of an image is defined as the image minus its 
-       morphological opening. This operation returns the bright spots 
-       of the image that are smaller than the structuring element"""
+        morphological opening. This operation returns the bright spots 
+        of the image that are smaller than the structuring element"""
     
-    image = image.copy()
-    w_tophat = cv2.morphologyEx(image, cv2.MORPH_TOPHAT,elem)
+    i_crop = i_crop.copy()
+    w_tophat = cv2.morphologyEx(i_crop, cv2.MORPH_TOPHAT,elem)
     return w_tophat
 
 w_tophat = whitetophat(image, elem)
-plot.subplot(1,2,2)
+plot.figure()
 plot.axis("off")
 plot.title("White top hat") 
 plot.imshow(w_tophat)

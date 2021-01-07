@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 
-def canny (im,t1,t2,gamma):
+def canny(im,t1,t2,gamma):
 	"""
 	This function simplifies the use
 	of canny edge detector
@@ -19,22 +19,10 @@ def canny (im,t1,t2,gamma):
 	edges = cv2.Canny(np.uint8(edges),t1,t2)
 	return edges
 
-def morph (op,im,eesize):
-	"""
-	This function return the application of the
-	morphological operator that we select
 
-	inputs:
-		- op: morphological operator 
-			+ 'closed'
-			+ 'open'
-			+ 'tophat'
-			+ 'dilate'
-			+ 'erode'
-		- im: input image
-		- eesize: half size of the estructural element  
 
-	"""
+def morph(op,im,eesize):
+	
 	if (op == 'closed'):
 		imClosed = im.copy()
 		se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(eesize,eesize))
@@ -77,7 +65,7 @@ def media(img):
 			sume += img[i,j]
 	return sume/dim
 
-def edges_extraction (im,prof,mm,precision):
+def edges_extraction(im,prof,mm,precision):
 	"""
 	This function is used to extract the edges of
 	the OCT-A image
@@ -167,7 +155,7 @@ def higest_contour (contours,cogidos):
 	"""
 	s = len(contours)
 	sizes = np.zeros(s)
-	minisizes = np.zeros(s)
+	#minisizes = np.zeros(s)
 	for i in range(s):
 		sizes[i] = cv2.contourArea(contours[i])
 	if len(sizes) == 0:

@@ -4,16 +4,17 @@ import opsfaz as faz
 import numpy as np
 import drawfaz as draw
 
-input_image = "./images/angio3superf.tif"
-
-# read image
-image = cv2.imread(input_image,0)
-size = image.shape
+# Import input image
+input_image = ("./data/A01_L/PARon.png")
+imagetocrop = cv2.imread(input_image,0)
+# Cortamos la imagen
+size = imagetocrop.shape
+image = imagetocrop[150:640, 130:600]
 
 # configure parameters
 mm = 3
 deep = 0
-precision = 0.7
+precision = 0
 
 # call the function
 faz, area, cnt = faz.detectFAZ(image, mm, deep, precision) 
@@ -25,6 +26,7 @@ faz, area, cnt = faz.detectFAZ(image, mm, deep, precision)
 
 
 # we obtain the faz mask
+cv2.imshow("Cropped image",image)
 cv2.imshow("Mask extracted",faz)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
