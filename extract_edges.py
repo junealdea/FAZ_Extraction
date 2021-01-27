@@ -28,6 +28,7 @@ def media(size):
              sume += i_gray[i,j]
  	return sume/dim
 
+
 media = media(size)
 
 #Image processing

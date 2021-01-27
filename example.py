@@ -3,9 +3,10 @@ import cv2
 import opsfaz as faz
 import numpy as np
 import drawfaz as draw
+import csv
 
 # Import input image
-input_image = ("./data/A01_L/PARon.png")
+input_image = ("./data/A01_R/A01_1 A01_1 OD 2020-06-29T085434 OCTA  06_SVP PARoff v6.16.7.0.png")
 imagetocrop = cv2.imread(input_image,0)
 # Cortamos la imagen
 size = imagetocrop.shape
@@ -13,7 +14,7 @@ image = imagetocrop[150:640, 130:600]
 
 # configure parameters
 mm = 3
-deep = 0
+deep = 1
 precision = 0
 
 # call the function
